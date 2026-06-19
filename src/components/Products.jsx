@@ -142,9 +142,9 @@ const Products = ({ onAddToCart }) => {
                 {/* Price + Cart */}
                 <div className="flex items-center justify-between pt-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-base font-bold text-white">₹{product.price}</span>
+                    <span className="text-base font-bold text-white">${product.price}</span>
                     {product.old && (
-                      <span className="text-xs text-slate-500 line-through">₹{product.old}</span>
+                      <span className="text-xs text-slate-500 line-through">${product.old}</span>
                     )}
                   </div>
                   <button

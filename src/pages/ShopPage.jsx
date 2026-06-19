@@ -270,8 +270,9 @@ export default function ShopPage({ onAddToCart }) {
                             {p.old && <span className="ml-2 text-sm text-slate-400 line-through">${p.old}</span>}
                           </div>
                           <button
-                            onClick={onAddToCart}
+                            onClick={() => onAddToCart && onAddToCart(p)}
                             className="w-10 h-10 rounded-full bg-brand-600 text-white grid place-items-center hover:bg-brand-700 transition-transform duration-200 hover:scale-110 active:scale-95 shadow-md"
+                            title="Add to Cart"
                           >
                             <ShoppingCart size={16} />
                           </button>

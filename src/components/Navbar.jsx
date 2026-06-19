@@ -9,7 +9,7 @@ const navLinks = [
   { label: 'Contact', to: '/contact' },
 ];
 
-const Navbar = ({ cartCount = 0 }) => {
+const Navbar = ({ cartCount = 0, onCartClick }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -90,17 +90,18 @@ const Navbar = ({ cartCount = 0 }) => {
             </button>
 
             {/* Cart */}
-            <Link
-              to="/shop"
+            <button
+              onClick={onCartClick}
               className="relative w-9 h-9 flex items-center justify-center rounded-full text-slate-400 hover:text-brand-400 hover:bg-white/5 transition-all duration-200"
+              title="Open Shopping Cart"
             >
               <ShoppingBag className="w-[18px] h-[18px]" />
               {cartCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-4.5 h-4.5 min-w-[18px] flex items-center justify-center bg-gradient-to-r from-brand-500 to-pink-500 text-white text-[10px] font-bold rounded-full shadow-lg shadow-brand-500/40">
+                <span className="absolute -top-0.5 -right-0.5 w-4.5 h-4.5 min-w-[18px] flex items-center justify-center bg-gradient-to-r from-brand-500 to-pink-500 text-white text-[10px] font-bold rounded-full shadow-lg shadow-brand-500/40 animate-scale-in">
                   {cartCount}
                 </span>
               )}
-            </Link>
+            </button>
 
             {/* Mobile Toggle */}
             <button

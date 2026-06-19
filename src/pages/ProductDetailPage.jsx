@@ -43,9 +43,7 @@ export default function ProductDetailPage({ onAddToCart }) {
 
   const handleAddToCartClick = () => {
     if (onAddToCart) {
-      for (let i = 0; i < quantity; i++) {
-        onAddToCart(product)
-      }
+      onAddToCart(product, quantity)
     }
   }
 

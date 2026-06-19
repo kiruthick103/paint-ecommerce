@@ -7,6 +7,8 @@ import ShopPage from './pages/ShopPage.jsx'
 import AboutPage from './pages/AboutPage.jsx'
 import ContactPage from './pages/ContactPage.jsx'
 import ProductDetailPage from './pages/ProductDetailPage.jsx'
+import LoginPage from './pages/LoginPage.jsx'
+import ServicesPage from './pages/ServicesPage.jsx'
 import CartDrawer from './components/CartDrawer.jsx'
 
 function ScrollToTop() {
@@ -20,6 +22,7 @@ function ScrollToTop() {
 export default function App() {
   const [cartItems, setCartItems] = useState([])
   const [isCartOpen, setIsCartOpen] = useState(false)
+  const [user, setUser] = useState(null)
 
   // Calculate total number of items in cart
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0)
@@ -68,7 +71,12 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <ScrollToTop />
-      <Navbar cartCount={cartCount} onCartClick={() => setIsCartOpen(true)} />
+      <Navbar 
+        cartCount={cartCount} 
+        onCartClick={() => setIsCartOpen(true)} 
+        user={user}
+        onLogout={() => setUser(null)}
+      />
       
       <main className="flex-1">
         <Routes>
@@ -77,6 +85,8 @@ export default function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/product/:id" element={<ProductDetailPage onAddToCart={handleAddToCart} />} />
+          <Route path="/login" element={<LoginPage onLogin={setUser} />} />
+          <Route path="/services" element={<ServicesPage />} />
         </Routes>
       </main>
 

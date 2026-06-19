@@ -24,10 +24,9 @@ const shopLinks = [
 
 const companyLinks = [
   { label: 'About Us', to: '/about' },
+  { label: 'Services', to: '/services' },
   { label: 'Contact', to: '/contact' },
-  { label: 'Blog', to: '#' },
-  { label: 'Press', to: '#' },
-  { label: 'Careers', to: '#' },
+  { label: 'Login', to: '/login' },
 ];
 
 const supportLinks = [

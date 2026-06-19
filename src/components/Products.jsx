@@ -1,169 +1,178 @@
-import { useState } from 'react'
-import { Star, ShoppingCart, Heart } from 'lucide-react'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Star, Heart, ShoppingBag, ArrowRight, Eye } from 'lucide-react';
+import { products } from '../data/products';
 
-const products = [
-  { 
-    name: 'Velvet Matte Interior', 
-    brand: 'ChromaPro', 
-    price: 49, 
-    old: 65, 
-    rating: 4.8, 
-    color: 'from-rose-300 to-rose-500', 
-    tag: 'Best Seller',
-    image: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&w=500&q=80',
-    category: 'Interior'
-  },
-  { 
-    name: 'WeatherShield Exterior', 
-    brand: 'DuraCoat', 
-    price: 89, 
-    old: 110, 
-    rating: 4.9, 
-    color: 'from-sky-300 to-sky-600', 
-    tag: 'New',
-    image: 'https://images.unsplash.com/photo-1541535881962-e668f38d4f3f?auto=format&fit=crop&w=500&q=80',
-    category: 'Exterior'
-  },
-  { 
-    name: 'Eco Silk Emulsion', 
-    brand: 'GreenLeaf', 
-    price: 59, 
-    old: null, 
-    rating: 4.7, 
-    color: 'from-emerald-300 to-emerald-600', 
-    tag: 'Eco',
-    image: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=500&q=80',
-    category: 'Interior'
-  },
-  { 
-    name: 'Royal Gloss Enamel', 
-    brand: 'Regal', 
-    price: 39, 
-    old: 55, 
-    rating: 4.6, 
-    color: 'from-amber-300 to-orange-500', 
-    tag: '-30%',
-    image: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=500&q=80',
-    category: 'Exterior'
-  },
-  { 
-    name: 'Designer Texture Pro', 
-    brand: 'ArtWall', 
-    price: 79, 
-    old: null, 
-    rating: 4.8, 
-    color: 'from-fuchsia-300 to-purple-600', 
-    tag: 'Premium',
-    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=500&q=80',
-    category: 'Interior'
-  },
-  { 
-    name: 'Quick Dry Primer', 
-    brand: 'BaseCoat', 
-    price: 29, 
-    old: 38, 
-    rating: 4.5, 
-    color: 'from-slate-300 to-slate-500', 
-    tag: 'Deal',
-    image: 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=500&q=80',
-    category: 'Tools'
-  },
-  { 
-    name: 'Metallic Finish Gold', 
-    brand: 'Lumière', 
-    price: 99, 
-    old: null, 
-    rating: 4.9, 
-    color: 'from-yellow-300 to-amber-600', 
-    tag: 'Luxe',
-    image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=500&q=80',
-    category: 'Interior'
-  },
-  { 
-    name: 'Kids Safe Washable', 
-    brand: 'PlayPaint', 
-    price: 69, 
-    old: 85, 
-    rating: 4.8, 
-    color: 'from-pink-300 to-rose-500', 
-    tag: 'Safe',
-    image: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=500&q=80',
-    category: 'Interior'
-  },
-]
+const filterTabs = ['All', 'Interior', 'Exterior', 'Primers', 'Enamel'];
 
-export default function Products({ onAddToCart }) {
-  const [activeCategory, setActiveCategory] = useState('All')
-  const [favorites, setFavorites] = useState([])
+const Products = ({ onAddToCart }) => {
+  const [activeTab, setActiveTab] = useState('All');
+  const [favorites, setFavorites] = useState(new Set());
 
-  const toggleFavorite = (name) => {
-    setFavorites(prev => 
-      prev.includes(name) ? prev.filter(n => n !== name) : [...prev, name]
-    )
-  }
+  const toggleFavorite = (id) => {
+    setFavorites((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  };
 
-  const filteredProducts = activeCategory === 'All' 
-    ? products 
-    : products.filter(p => p.category === activeCategory)
+  const filtered =
+    activeTab === 'All'
+      ? products.slice(0, 8)
+      : products.filter((p) => p.category === activeTab).slice(0, 8);
 
   return (
-    <section id="products" className="py-16 lg:py-24 bg-slate-50">
+    <section className="py-20 lg:py-28 bg-slate-950">
       <div className="container-x">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10 animate-fade-up">
           <div>
-            <h2 className="text-3xl lg:text-4xl font-extrabold">Trending Products</h2>
-            <p className="text-slate-500 mt-2">Picked by designers, loved by homes.</p>
+            <p className="section-subtitle">Curated Selection</p>
+            <h2 className="section-title">Trending Paints</h2>
           </div>
-          <div className="flex flex-wrap gap-2">
-            {['All','Interior','Exterior','Tools'].map((t) => (
-              <button 
-                key={t} 
-                onClick={() => setActiveCategory(t)}
-                className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${activeCategory === t ? 'bg-brand-600 text-white shadow-soft' : 'bg-white border border-slate-200 hover:border-brand-600 text-slate-700'}`}
+
+          {/* Tabs */}
+          <div className="flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-full p-1 overflow-x-auto">
+            {filterTabs.map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300 ${
+                  activeTab === tab
+                    ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/30'
+                    : 'text-slate-400 hover:text-white'
+                }`}
               >
-                {t}
+                {tab}
               </button>
             ))}
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredProducts.map(p => (
-            <article key={p.name} className="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:shadow-soft transition-all duration-300">
-              <div className={`relative aspect-square overflow-hidden bg-gradient-to-br ${p.color}`}>
-                <img src={p.image} alt={p.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                <span className="absolute top-3 left-3 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold shadow-sm">{p.tag}</span>
-                <button 
-                  onClick={() => toggleFavorite(p.name)} 
-                  className="absolute top-3 right-3 w-9 h-9 grid place-items-center bg-white/90 rounded-full hover:bg-white shadow-sm transition-transform duration-200 hover:scale-110 active:scale-95"
+
+        {/* Product Grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+          {filtered.map((product, i) => (
+            <div
+              key={product.id}
+              className="group relative bg-white/[0.03] border border-white/[0.06] rounded-2xl overflow-hidden card-hover animate-fade-up"
+              style={{ animationDelay: `${i * 60}ms` }}
+            >
+              {/* Image */}
+              <div className="relative aspect-square overflow-hidden bg-slate-900">
+                <Link to={`/product/${product.id}`}>
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                </Link>
+
+                {/* Overlay on hover */}
+                <div className="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/20 transition-all duration-300" />
+
+                {/* Tag */}
+                {product.tag && (
+                  <span className="absolute top-3 left-3 px-2.5 py-1 bg-brand-500/90 backdrop-blur-sm text-white text-xs font-semibold rounded-lg shadow-lg">
+                    {product.tag}
+                  </span>
+                )}
+
+                {/* Heart */}
+                <button
+                  onClick={() => toggleFavorite(product.id)}
+                  className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-slate-950/50 backdrop-blur-sm border border-white/10 opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-slate-950/70"
                 >
-                  <Heart size={16} className={favorites.includes(p.name) ? 'fill-rose-500 text-rose-500' : 'text-slate-700'}/>
+                  <Heart
+                    className={`w-4 h-4 transition-colors ${
+                      favorites.has(product.id) ? 'fill-pink-500 text-pink-500' : 'text-white'
+                    }`}
+                  />
                 </button>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"/>
+
+                {/* Quick View */}
+                <Link
+                  to={`/product/${product.id}`}
+                  className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/90 text-slate-900 text-xs font-semibold opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 hover:bg-white"
+                >
+                  <Eye className="w-3.5 h-3.5" />
+                  Quick View
+                </Link>
+
+                {/* Color Swatch */}
+                {product.hex && (
+                  <div
+                    className="absolute bottom-3 right-3 w-6 h-6 rounded-full border-2 border-white/30 shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ backgroundColor: product.hex }}
+                    title={product.color}
+                  />
+                )}
               </div>
-              <div className="p-5">
-                <div className="text-xs uppercase tracking-wider text-slate-500">{p.brand}</div>
-                <h3 className="font-bold mt-1 line-clamp-1">{p.name}</h3>
-                <div className="flex items-center gap-1 mt-2 text-amber-500 text-sm">
-                  <Star size={14} fill="currentColor"/> <span className="text-slate-700 font-semibold">{p.rating}</span>
-                  <span className="text-slate-400">(120)</span>
-                </div>
-                <div className="flex items-center justify-between mt-4">
-                  <div>
-                    <span className="font-display text-xl font-extrabold text-brand-700">${p.price}</span>
-                    {p.old && <span className="ml-2 text-sm text-slate-400 line-through">${p.old}</span>}
+
+              {/* Info */}
+              <div className="p-4 space-y-2">
+                <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">
+                  {product.brand}
+                </p>
+
+                <Link
+                  to={`/product/${product.id}`}
+                  className="block text-sm font-semibold text-white hover:text-brand-400 transition-colors line-clamp-1"
+                >
+                  {product.name}
+                </Link>
+
+                {/* Rating */}
+                <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-0.5">
+                    {[...Array(5)].map((_, j) => (
+                      <Star
+                        key={j}
+                        className={`w-3 h-3 ${
+                          j < Math.floor(product.rating)
+                            ? 'fill-amber-400 text-amber-400'
+                            : 'fill-slate-700 text-slate-700'
+                        }`}
+                      />
+                    ))}
                   </div>
-                  <button 
-                    onClick={onAddToCart}
-                    className="w-10 h-10 rounded-full bg-brand-600 text-white grid place-items-center hover:bg-brand-700 transition-transform duration-200 hover:scale-110 active:scale-95 shadow-md"
+                  <span className="text-xs text-slate-500">({product.reviews})</span>
+                </div>
+
+                {/* Price + Cart */}
+                <div className="flex items-center justify-between pt-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-base font-bold text-white">₹{product.price}</span>
+                    {product.old && (
+                      <span className="text-xs text-slate-500 line-through">₹{product.old}</span>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => onAddToCart && onAddToCart(product)}
+                    className="w-8 h-8 flex items-center justify-center rounded-full bg-brand-500/10 text-brand-400 hover:bg-brand-500 hover:text-white transition-all duration-300"
+                    title="Add to Cart"
                   >
-                    <ShoppingCart size={16}/>
+                    <ShoppingBag className="w-4 h-4" />
                   </button>
                 </div>
               </div>
-            </article>
+            </div>
           ))}
+        </div>
+
+        {/* View All */}
+        <div className="text-center mt-12 animate-fade-up">
+          <Link
+            to="/shop"
+            className="btn-ghost inline-flex items-center gap-2 group"
+          >
+            View All Products
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
+
+export default Products;

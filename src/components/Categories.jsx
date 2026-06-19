@@ -1,38 +1,107 @@
-import { Home, Building2, Brush, Sparkles, Droplets, Wrench } from 'lucide-react'
-const cats = [
-  { icon: Home, label: 'Interior', image: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=300&q=80' },
-  { icon: Building2, label: 'Exterior', image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=300&q=80' },
-  { icon: Droplets, label: 'Primers', image: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=300&q=80' },
-  { icon: Sparkles, label: 'Enamel', image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=300&q=80' },
-  { icon: Brush, label: 'Brushes', image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=300&q=80' },
-  { icon: Wrench, label: 'Tools', image: 'https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5?auto=format&fit=crop&w=300&q=80' },
-]
-export default function Categories() {
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Home, Building2, Droplets, Sparkles, Brush, Wrench, ArrowUpRight } from 'lucide-react';
+
+const categories = [
+  {
+    label: 'Interior',
+    icon: Home,
+    image: 'https://images.unsplash.com/photo-1615529328331-f8917597711f?w=500&h=600&fit=crop',
+    desc: 'Premium wall finishes',
+    count: '320+ shades',
+  },
+  {
+    label: 'Exterior',
+    icon: Building2,
+    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=500&h=600&fit=crop',
+    desc: 'Weather-proof coatings',
+    count: '180+ shades',
+  },
+  {
+    label: 'Primers',
+    icon: Droplets,
+    image: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=500&h=600&fit=crop',
+    desc: 'Surface preparation',
+    count: '45+ variants',
+  },
+  {
+    label: 'Enamel',
+    icon: Sparkles,
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=500&h=600&fit=crop',
+    desc: 'High-gloss finishes',
+    count: '120+ shades',
+  },
+  {
+    label: 'Brushes',
+    icon: Brush,
+    image: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=500&h=600&fit=crop',
+    desc: 'Professional grade',
+    count: '80+ types',
+  },
+  {
+    label: 'Tools',
+    icon: Wrench,
+    image: 'https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=500&h=600&fit=crop',
+    desc: 'Rollers & accessories',
+    count: '150+ items',
+  },
+];
+
+const Categories = () => {
   return (
-    <section className="py-16 lg:py-24">
+    <section className="py-20 lg:py-28 bg-slate-950">
       <div className="container-x">
-        <div className="flex items-end justify-between mb-10">
-          <div>
-            <h2 className="text-3xl lg:text-4xl font-extrabold">Shop by Category</h2>
-            <p className="text-slate-500 mt-2">Find exactly what your project needs.</p>
-          </div>
-          <a href="#" className="hidden sm:inline text-brand-600 font-semibold hover:underline">View all →</a>
+        {/* Header */}
+        <div className="text-center mb-14 animate-fade-up">
+          <p className="section-subtitle">Browse Collection</p>
+          <h2 className="section-title">Shop by Category</h2>
+          <p className="text-slate-400 mt-3 max-w-xl mx-auto">
+            From interior elegance to exterior durability — find everything you need for your next project.
+          </p>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-          {cats.map(({icon:Icon,label,image}) => (
-            <a href="#" key={label} className="group relative aspect-[4/5] rounded-3xl overflow-hidden hover:shadow-soft transition block">
-              <img src={image} alt={label} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-slate-950/40 group-hover:bg-slate-950/50 transition-colors duration-300" />
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-4">
-                <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur grid place-items-center mb-3 group-hover:scale-110 transition duration-300">
-                  <Icon size={22}/>
+
+        {/* Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-5">
+          {categories.map((cat, i) => {
+            const Icon = cat.icon;
+            return (
+              <Link
+                key={cat.label}
+                to={`/shop?category=${cat.label}`}
+                className="group relative rounded-2xl overflow-hidden aspect-[3/4] card-hover animate-fade-up"
+                style={{ animationDelay: `${i * 80}ms` }}
+              >
+                {/* Image */}
+                <img
+                  src={cat.image}
+                  alt={cat.label}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+
+                {/* Content */}
+                <div className="relative h-full flex flex-col justify-end p-4 lg:p-5">
+                  <div className="mb-3 w-10 h-10 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/10 group-hover:bg-brand-500/20 group-hover:border-brand-500/30 transition-all duration-300">
+                    <Icon className="w-5 h-5 text-white group-hover:text-brand-400 transition-colors" />
+                  </div>
+                  <h3 className="text-white font-semibold text-sm lg:text-base">{cat.label}</h3>
+                  <p className="text-slate-400 text-xs mt-0.5">{cat.desc}</p>
+                  <p className="text-brand-400 text-xs font-medium mt-1">{cat.count}</p>
+
+                  {/* Arrow */}
+                  <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/0 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:bg-white/10 transition-all duration-300 -translate-y-2 group-hover:translate-y-0">
+                    <ArrowUpRight className="w-4 h-4 text-white" />
+                  </div>
                 </div>
-                <div className="font-bold tracking-wide text-xs sm:text-sm uppercase">{label}</div>
-              </div>
-            </a>
-          ))}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
+
+export default Categories;

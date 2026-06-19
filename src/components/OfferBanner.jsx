@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Clock, Percent, Zap } from 'lucide-react';
+import { ArrowRight, Clock, Zap } from 'lucide-react';
 
 const targetDate = new Date('2026-07-31T23:59:59').getTime();
 
@@ -30,11 +30,11 @@ const OfferBanner = () => {
   ];
 
   return (
-    <section className="py-20 lg:py-28 bg-slate-950">
+    <section className="py-16 lg:py-24 bg-white border-b border-slate-100">
       <div className="container-x">
-        <div className="relative rounded-3xl overflow-hidden">
+        <div className="relative rounded-3xl overflow-hidden shadow-lg">
           {/* Background */}
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-600 via-pink-600 to-purple-700" />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-700 via-brand-605 via-brand-600 to-pink-700" />
 
           {/* Background Image */}
           <div
@@ -48,65 +48,59 @@ const OfferBanner = () => {
           {/* Decorative Blur Circles */}
           <div className="absolute -top-20 -left-20 w-72 h-72 bg-white/10 rounded-full blur-3xl" />
           <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-purple-400/10 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-400/5 rounded-full blur-3xl" />
 
           {/* Content */}
           <div className="relative z-10 px-6 sm:px-10 lg:px-16 py-14 lg:py-20">
             <div className="grid lg:grid-cols-2 gap-10 items-center">
               {/* Left */}
               <div className="space-y-6">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/20">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/20">
                   <Zap className="w-4 h-4 text-yellow-300" />
-                  <span className="text-sm font-semibold text-white">Limited Time Offer</span>
+                  <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">Limited Time Offer</span>
                 </div>
 
-                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
                   Up to{' '}
-                  <span className="relative inline-block">
-                    <span className="text-yellow-300">40% OFF</span>
-                    <svg className="absolute -bottom-1 left-0 w-full" viewBox="0 0 200 8" fill="none">
-                      <path d="M2 6C50 2 150 2 198 6" stroke="rgba(255,255,255,0.4)" strokeWidth="3" strokeLinecap="round" />
-                    </svg>
-                  </span>
+                  <span className="text-yellow-350 font-black">40% OFF</span>
                   <br />
                   on Designer Collections
                 </h2>
 
-                <p className="text-white/70 text-lg max-w-md">
+                <p className="text-white/80 text-base sm:text-lg max-w-md leading-relaxed">
                   Premium finishes, luxury textures, and trending palettes — all at unbeatable prices this season.
                 </p>
 
                 <Link
                   to="/shop"
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-white text-slate-900 font-semibold rounded-full hover:bg-yellow-300 hover:shadow-xl hover:shadow-yellow-300/20 transition-all duration-300 group"
+                  className="inline-flex items-center gap-2 px-8 py-3.5 bg-white text-slate-900 font-bold rounded-full hover:bg-slate-100 transition duration-300 shadow-md group text-sm"
                 >
                   Grab the Deal
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
 
               {/* Right: Countdown */}
               <div className="flex flex-col items-center lg:items-end space-y-6">
-                <div className="flex items-center gap-2 text-white/60">
-                  <Clock className="w-4 h-4" />
-                  <span className="text-sm font-medium uppercase tracking-wider">Sale Ends In</span>
+                <div className="flex items-center gap-2 text-white/70">
+                  <Clock className="w-4 h-4 animate-pulse" />
+                  <span className="text-xs font-bold uppercase tracking-wider">Sale Ends In</span>
                 </div>
 
                 <div className="flex gap-3 sm:gap-4">
                   {timeUnits.map((unit, i) => (
                     <React.Fragment key={unit.label}>
                       <div className="flex flex-col items-center">
-                        <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-xl">
-                          <span className="text-2xl sm:text-3xl font-bold text-white font-mono">
+                        <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-md">
+                          <span className="text-xl sm:text-2xl font-bold text-white font-mono">
                             {String(unit.value).padStart(2, '0')}
                           </span>
                         </div>
-                        <span className="text-xs text-white/50 mt-2 font-medium uppercase tracking-wider">
+                        <span className="text-[10px] text-white/60 mt-2 font-bold uppercase tracking-wider">
                           {unit.label}
                         </span>
                       </div>
                       {i < timeUnits.length - 1 && (
-                        <span className="text-2xl sm:text-3xl font-bold text-white/30 self-start mt-4 sm:mt-5">
+                        <span className="text-xl sm:text-2xl font-bold text-white/30 self-start mt-4 sm:mt-6">
                           :
                         </span>
                       )}
@@ -119,7 +113,7 @@ const OfferBanner = () => {
                   {['Interior', 'Exterior', 'Enamel'].map((cat) => (
                     <span
                       key={cat}
-                      className="px-3 py-1 rounded-full bg-white/10 text-white/80 text-xs font-medium border border-white/10"
+                      className="px-3.5 py-1 rounded-full bg-white/10 text-white/90 text-xs font-bold border border-white/10"
                     >
                       {cat}
                     </span>

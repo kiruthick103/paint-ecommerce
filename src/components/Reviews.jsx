@@ -33,19 +33,19 @@ const reviews = [
 
 const Reviews = () => {
   return (
-    <section className="py-20 lg:py-28 bg-slate-950 relative overflow-hidden">
+    <section className="py-16 lg:py-24 bg-white relative overflow-hidden border-b border-slate-100">
       {/* Background Decoration */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-500/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container-x relative z-10">
         {/* Header */}
         <div className="text-center mb-14 animate-fade-up">
-          <div className="inline-flex items-center gap-2 mb-4">
-            <MessageSquare className="w-5 h-5 text-brand-400" />
-            <p className="section-subtitle !mb-0">Testimonials</p>
+          <div className="inline-flex items-center gap-2 mb-3 bg-brand-50 border border-brand-100/50 px-3 py-1.5 rounded-full">
+            <MessageSquare className="w-4 h-4 text-brand-605 text-brand-600" />
+            <p className="text-xs font-bold text-brand-700 uppercase tracking-wider">Testimonials</p>
           </div>
-          <h2 className="section-title">Loved by Designers & Homeowners</h2>
-          <p className="text-slate-400 mt-3 max-w-lg mx-auto">
+          <h2 className="section-title text-slate-900">Loved by Designers & Homeowners</h2>
+          <p className="text-slate-500 mt-2 max-w-lg mx-auto">
             See why thousands of professionals and DIY enthusiasts choose ChromaHaus for their painting needs.
           </p>
         </div>
@@ -55,12 +55,12 @@ const Reviews = () => {
           {reviews.map((review, i) => (
             <div
               key={review.name}
-              className="group relative bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 lg:p-8 hover:bg-white/[0.06] hover:border-white/[0.12] hover:-translate-y-2 transition-all duration-500 animate-fade-up"
+              className="group relative bg-slate-50 border border-slate-100 rounded-3xl p-6 lg:p-8 hover:bg-white hover:border-slate-200 hover:-translate-y-1.5 hover:shadow-md transition-all duration-300 animate-fade-up shadow-sm"
               style={{ animationDelay: `${i * 120}ms` }}
             >
               {/* Quote Icon */}
-              <div className={`absolute -top-4 right-6 w-10 h-10 rounded-xl bg-gradient-to-br ${review.color} flex items-center justify-center shadow-lg opacity-60 group-hover:opacity-100 transition-opacity duration-300`}>
-                <Quote className="w-5 h-5 text-white" />
+              <div className={`absolute -top-4 right-6 w-9 h-9 rounded-xl bg-gradient-to-br ${review.color} flex items-center justify-center shadow-md opacity-80 group-hover:opacity-100 transition-opacity duration-300`}>
+                <Quote className="w-4 h-4 text-white" />
               </div>
 
               {/* Stars */}
@@ -71,12 +71,12 @@ const Reviews = () => {
               </div>
 
               {/* Quote */}
-              <p className="text-slate-300 text-sm leading-relaxed mb-6 min-h-[80px]">
+              <p className="text-slate-600 text-sm font-medium italic leading-relaxed mb-6 min-h-[80px]">
                 "{review.quote}"
               </p>
 
               {/* Divider */}
-              <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-5" />
+              <div className="h-px bg-slate-200/60 mb-5" />
 
               {/* Author */}
               <div className="flex items-center gap-3">
@@ -84,18 +84,18 @@ const Reviews = () => {
                   <img
                     src={review.avatar}
                     alt={review.name}
-                    className="w-11 h-11 rounded-full object-cover border-2 border-white/10 group-hover:border-brand-500/40 transition-colors duration-300"
+                    className="w-11 h-11 rounded-full object-cover border-2 border-slate-100 group-hover:border-brand-500/40 transition-colors duration-300"
                   />
-                  <div className={`absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-gradient-to-br ${review.color} border-2 border-slate-950`} />
+                  <div className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-gradient-to-br ${review.color} border-2 border-white`} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-white">{review.name}</p>
-                  <p className="text-xs text-slate-500">{review.role}</p>
+                  <p className="text-sm font-bold text-slate-800">{review.name}</p>
+                  <p className="text-xs text-slate-400 font-semibold">{review.role}</p>
                 </div>
               </div>
 
               {/* Hover Glow */}
-              <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${review.color} opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500 pointer-events-none`} />
+              <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${review.color} opacity-0 group-hover:opacity-[0.02] transition-opacity duration-500 pointer-events-none`} />
             </div>
           ))}
         </div>
